@@ -1,0 +1,317 @@
+{
+  "info": {
+    "name": "Vuln E-Commerce — API Collection",
+    "description": "E-commerce API collection. Use these requests to interact with all services and explore the application.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://securecoding.co",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth Service",
+      "description": "User registration, login, and search endpoints.",
+      "item": [
+        {
+          "name": "Register — New User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"]}
+          }
+        },
+        {
+          "name": "Register — Second User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"janedoe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"AnotherPass456!\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"]}
+          }
+        },
+        {
+          "name": "Login — Valid Credentials",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"]}
+          }
+        },
+        {
+          "name": "Login — Wrong Password",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"wrongpassword\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"]}
+          }
+        },
+        {
+          "name": "Login — Non-existent User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"ghost\",\n  \"password\": \"anything\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"]}
+          }
+        },
+        {
+          "name": "Search Users — by Name",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/auth/users/search?q=john", "host": ["{{baseUrl}}"], "path": ["api", "auth", "users", "search"], "query": [{"key": "q", "value": "john"}]}
+          }
+        },
+        {
+          "name": "Search Users — Partial Match",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/auth/users/search?q=doe", "host": ["{{baseUrl}}"], "path": ["api", "auth", "users", "search"], "query": [{"key": "q", "value": "doe"}]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Service",
+      "description": "Product CRUD, search, filtering, export, and statistics.",
+      "item": [
+        {
+          "name": "Create Product — Laptop",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gaming Laptop\",\n  \"description\": \"High-performance gaming laptop with RTX 4080, 32GB RAM, 1TB SSD\",\n  \"price\": 1899.99,\n  \"category\": \"Electronics\",\n  \"stock\": 25,\n  \"imageUrl\": \"https://example.com/laptop.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Create Product — Mouse",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wireless Mouse\",\n  \"description\": \"Ergonomic wireless mouse with 12000 DPI sensor\",\n  \"price\": 49.99,\n  \"category\": \"Electronics\",\n  \"stock\": 150,\n  \"imageUrl\": \"https://example.com/mouse.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Create Product — T-Shirt",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Premium Cotton T-Shirt\",\n  \"description\": \"100% organic cotton, available in multiple colors\",\n  \"price\": 24.99,\n  \"category\": \"Clothing\",\n  \"stock\": 300,\n  \"imageUrl\": \"https://example.com/tshirt.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Create Product — Headphones",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Noise Cancelling Headphones\",\n  \"description\": \"Over-ear headphones with ANC and 30hr battery life\",\n  \"price\": 299.99,\n  \"category\": \"Electronics\",\n  \"stock\": 75,\n  \"imageUrl\": \"https://example.com/headphones.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Create Product — Book",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Clean Code\",\n  \"description\": \"A handbook of agile software craftsmanship by Robert C. Martin\",\n  \"price\": 34.99,\n  \"category\": \"Books\",\n  \"stock\": 200,\n  \"imageUrl\": \"https://example.com/cleancode.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "List All Products",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"]}
+          }
+        },
+        {
+          "name": "Filter Products — Electronics",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products?category=Electronics", "host": ["{{baseUrl}}"], "path": ["api", "products"], "query": [{"key": "category", "value": "Electronics"}]}
+          }
+        },
+        {
+          "name": "Filter Products — Clothing",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products?category=Clothing", "host": ["{{baseUrl}}"], "path": ["api", "products"], "query": [{"key": "category", "value": "Clothing"}]}
+          }
+        },
+        {
+          "name": "Search Products — Laptop",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products/search?q=laptop", "host": ["{{baseUrl}}"], "path": ["api", "products", "search"], "query": [{"key": "q", "value": "laptop"}]}
+          }
+        },
+        {
+          "name": "Search Products — Cotton",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products/search?q=cotton", "host": ["{{baseUrl}}"], "path": ["api", "products", "search"], "query": [{"key": "q", "value": "cotton"}]}
+          }
+        },
+        {
+          "name": "Update Product (replace {id})",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gaming Laptop Pro\",\n  \"description\": \"Updated: Now with RTX 4090, 64GB RAM, 2TB SSD\",\n  \"price\": 2499.99,\n  \"category\": \"Electronics\",\n  \"stock\": 10,\n  \"imageUrl\": \"https://example.com/laptop-pro.jpg\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/products/{id}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{id}"]}
+          }
+        },
+        {
+          "name": "Delete Product (replace {id})",
+          "request": {
+            "method": "DELETE",
+            "url": {"raw": "{{baseUrl}}/api/products/{id}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{id}"]}
+          }
+        },
+        {
+          "name": "Export Products",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products/export?filename=my_products", "host": ["{{baseUrl}}"], "path": ["api", "products", "export"], "query": [{"key": "filename", "value": "my_products"}]}
+          }
+        },
+        {
+          "name": "Product Stats — Group by Category",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products/stats?groupBy=Category", "host": ["{{baseUrl}}"], "path": ["api", "products", "stats"], "query": [{"key": "groupBy", "value": "Category"}]}
+          }
+        },
+        {
+          "name": "Debug Info",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/products/debug", "host": ["{{baseUrl}}"], "path": ["api", "products", "debug"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order Service",
+      "description": "Order creation, listing, and filtering.",
+      "item": [
+        {
+          "name": "Create Order — Single Item",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"johndoe\",\n  \"items\": [\n    {\n      \"productId\": \"p1\",\n      \"productName\": \"Gaming Laptop\",\n      \"quantity\": 1,\n      \"unitPrice\": 1899.99\n    }\n  ],\n  \"totalPrice\": 1899.99,\n  \"discount\": 0,\n  \"shippingAddress\": \"123 Main Street, Istanbul, Turkey\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "Create Order — Multiple Items",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"johndoe\",\n  \"items\": [\n    {\n      \"productId\": \"p1\",\n      \"productName\": \"Wireless Mouse\",\n      \"quantity\": 2,\n      \"unitPrice\": 49.99\n    },\n    {\n      \"productId\": \"p2\",\n      \"productName\": \"Noise Cancelling Headphones\",\n      \"quantity\": 1,\n      \"unitPrice\": 299.99\n    }\n  ],\n  \"totalPrice\": 399.97,\n  \"discount\": 0,\n  \"shippingAddress\": \"456 Tech Park, Ankara, Turkey\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "Create Order — With Discount",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"janedoe\",\n  \"items\": [\n    {\n      \"productId\": \"p3\",\n      \"productName\": \"Premium Cotton T-Shirt\",\n      \"quantity\": 3,\n      \"unitPrice\": 24.99\n    }\n  ],\n  \"totalPrice\": 74.97,\n  \"discount\": 10,\n  \"shippingAddress\": \"789 Fashion Ave, Izmir, Turkey\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "List All Orders",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api", "orders"]}
+          }
+        },
+        {
+          "name": "Filter Orders — by UserId",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/orders?filter={\"UserId\":\"johndoe\"}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"],
+              "query": [{"key": "filter", "value": "{\"UserId\":\"johndoe\"}"}]
+            }
+          }
+        },
+        {
+          "name": "Filter Orders — by Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/orders?filter={\"Status\":\"Pending\"}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"],
+              "query": [{"key": "filter", "value": "{\"Status\":\"Pending\"}"}]
+            }
+          }
+        },
+        {
+          "name": "Get Order by ID (replace {id})",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/api/orders/{id}", "host": ["{{baseUrl}}"], "path": ["api", "orders", "{id}"]}
+          }
+        }
+      ]
+    }
+  ]
+}

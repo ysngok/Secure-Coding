@@ -1,0 +1,36 @@
+# Traefik Dynamic Configuration — Routing Rules
+http:
+  routers:
+    auth:
+      rule: "Host(`securecoding.co`) && PathPrefix(`/api/auth`)"
+      entryPoints:
+        - web
+      service: auth-service
+
+    product:
+      rule: "Host(`securecoding.co`) && PathPrefix(`/api/products`)"
+      entryPoints:
+        - web
+      service: product-service
+
+    order:
+      rule: "Host(`securecoding.co`) && PathPrefix(`/api/orders`)"
+      entryPoints:
+        - web
+      service: order-service
+
+  services:
+    auth-service:
+      loadBalancer:
+        servers:
+          - url: "http://auth-service:8080"
+
+    product-service:
+      loadBalancer:
+        servers:
+          - url: "http://product-service:8080"
+
+    order-service:
+      loadBalancer:
+        servers:
+          - url: "http://order-service:8080"

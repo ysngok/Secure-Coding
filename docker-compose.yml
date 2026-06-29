@@ -1,0 +1,79 @@
+services:
+  traefik:
+    image: traefik:v3.4
+    container_name: vuln-ecommerce-traefik
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./compose/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./compose/traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks:
+      - ecommerce-net
+
+  mongodb:
+    image: mongo:7
+    container_name: vuln-ecommerce-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - ecommerce-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build:
+      context: ./src
+      dockerfile: ../compose/auth-service.Dockerfile
+    container_name: vuln-ecommerce-auth
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+      - MongoDbSettings__DatabaseName=vuln_auth
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecommerce-net
+
+  product-service:
+    build:
+      context: ./src
+      dockerfile: ../compose/product-service.Dockerfile
+    container_name: vuln-ecommerce-product
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+      - MongoDbSettings__DatabaseName=vuln_products
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecommerce-net
+
+  order-service:
+    build:
+      context: ./src
+      dockerfile: ../compose/order-service.Dockerfile
+    container_name: vuln-ecommerce-order
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+      - MongoDbSettings__DatabaseName=vuln_orders
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecommerce-net
+
+volumes:
+  mongo_data:
+
+networks:
+  ecommerce-net:
+    driver: bridge
