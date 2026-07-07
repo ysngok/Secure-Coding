@@ -19,6 +19,12 @@ http:
         - web
       service: order-service
 
+    frontend:
+      rule: "Host(`securecoding.co`) && PathPrefix(`/`)"
+      entryPoints:
+        - web
+      service: frontend-service
+
   services:
     auth-service:
       loadBalancer:
@@ -34,3 +40,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://order-service:8080"
+
+    frontend-service:
+      loadBalancer:
+        servers:
+          - url: "http://frontend:80"

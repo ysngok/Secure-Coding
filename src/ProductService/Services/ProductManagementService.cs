@@ -155,4 +155,17 @@ public class ProductManagementService
             }
         };
     }
+
+    public async Task<Product?> GetProductByIdAsync(string id)
+    {
+        return await _products.Find(p => p.Id == id).FirstOrDefaultAsync();
+    }
+
+    public async Task<bool> AddCommentAsync(string productId, ProductComment comment)
+    {
+        var filter = Builders<Product>.Filter.Eq(p => p.Id, productId);
+        var update = Builders<Product>.Update.Push(p => p.Comments, comment);
+        var result = await _products.UpdateOneAsync(filter, update);
+        return result.ModifiedCount > 0;
+    }
 }

@@ -195,4 +195,61 @@ public class ProductController : ControllerBase
             return StatusCode(500, ApiResponse.Fail("Stats failed", ex));
         }
     }
+
+    /// <summary>
+    /// VULNERABLE Reflected Echo Endpoint returning HTML directly.
+    /// </summary>
+    [HttpGet("echo")]
+    public IActionResult Echo([FromQuery] string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return BadRequest(ApiResponse.Fail("Message query parameter is required"));
+
+        // Direct return of user input as HTML context (Reflected XSS)
+        return Content($"<html><body><h3>Echo Service Diagnostics</h3><p>Echoed Message: {message}</p></body></html>", "text/html");
+    }
+
+    /// <summary>
+    /// Get a single product by ID.
+    /// </summary>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProduct(string id)
+    {
+        try
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+                return NotFound(ApiResponse.Fail("Product not found"));
+
+            return Ok(ApiResponse<Product>.Ok(product));
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ApiResponse.Fail("Failed to get product", ex));
+        }
+    }
+
+    /// <summary>
+    /// Add a comment/review to a product.
+    /// </summary>
+    [HttpPost("{id}/comments")]
+    public async Task<IActionResult> AddComment(string id, [FromBody] ProductComment comment)
+    {
+        try
+        {
+            if (comment == null || string.IsNullOrEmpty(comment.Content))
+                return BadRequest(ApiResponse.Fail("Comment content is required"));
+
+            var success = await _productService.AddCommentAsync(id, comment);
+            if (!success)
+                return NotFound(ApiResponse.Fail("Product not found"));
+
+            return Ok(ApiResponse<ProductComment>.Ok(comment, "Comment added successfully"));
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ApiResponse.Fail("Failed to add comment", ex));
+        }
+    }
 }
+

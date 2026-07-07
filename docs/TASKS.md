@@ -19,6 +19,9 @@ Laboratuvarda ilerlerken `docs/tasks/` klasöründeki aşağıdaki analiz dosyal
 ### 3. [Sprint 3 — Yorumlayıcı ve Enjeksiyon Güvenliği](file:///Users/yasin/Desktop/securecoding/tasks/docs/tasks/task3_injection_analysis.md)
 * **Odak:** Dinamik sorgu oluşturma mantığı, regex işlemleri ve arka planda tetiklenen sistem araçlarındaki güvenlik zayıflıkları.
 
+### 4. [Sprint 4 — İstemci Tarafı Güvenliği ve XSS](file:///Users/yasin/Desktop/securecoding/tasks/docs/tasks/task4_xss_analysis.md)
+* **Odak:** Ön yüzde DOM-based XSS ve veri tabanında Stored XSS zafiyetlerinin incelenmesi, tespiti ve çözümü.
+
 ---
 
 ## 📝 Çalışma ve Teslim Metodu

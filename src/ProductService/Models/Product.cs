@@ -21,5 +21,7 @@ public class Product
 
     public string? ImageUrl { get; set; }
 
+    public List<ProductComment> Comments { get; set; } = new();
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

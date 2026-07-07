@@ -71,9 +71,18 @@ services:
     networks:
       - ecommerce-net
 
+  frontend:
+    image: nginx:alpine
+    container_name: vuln-ecommerce-frontend
+    volumes:
+      - ./src/Frontend:/usr/share/nginx/html:ro
+    networks:
+      - ecommerce-net
+
 volumes:
   mongo_data:
 
 networks:
   ecommerce-net:
     driver: bridge
+
